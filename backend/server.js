@@ -21,8 +21,8 @@ const PORT = process.env.PORT || 3000;
 sequelize.sync({ alter: true })
   .then(() => {
     console.log("✅ Base de données synchronisée.");
-    app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Serveur démarré sur http://0.0.0.0:${PORT}`);
     });
   })
   .catch((err) => console.error("❌ Erreur de connexion à la base de données :", err));
