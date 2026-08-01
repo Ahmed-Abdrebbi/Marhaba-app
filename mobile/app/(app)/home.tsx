@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import useAuthStore from '../../store/useAuthStore';
 
@@ -6,18 +7,16 @@ export default function HomeScreen() {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
 
-  // Extract first name from fullName, fallback to "Utilisateur"
   const userName = user?.fullName?.split(' ')[0] || 'Utilisateur';
 
   const handleLogout = async () => {
     await logout();
-    // Auth guard in root _layout.tsx will redirect to welcome
   };
 
   return (
     <SafeAreaView style={styles.container}>
 
-      {/* Top Header */}
+      {}
       <View style={styles.topHeader}>
         <TouchableOpacity>
           <Ionicons name="menu-outline" size={28} color="#FFFFFF" />
@@ -26,7 +25,7 @@ export default function HomeScreen() {
         <View style={styles.onlineDot} />
       </View>
 
-      {/* Main Content */}
+      {}
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Marhba,</Text>
         <Text style={styles.nameText}>{userName} 👋</Text>
@@ -43,7 +42,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Bottom Tab Bar */}
+      {}
       <View style={styles.bottomBar}>
         <TouchableOpacity style={styles.tabItem}>
           <Ionicons name="home" size={24} color="#A855F7" />
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0B0F19',
   },
-  // Header
+
   topHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#22C55E',
   },
-  // Content
+
   content: {
     flex: 1,
     alignItems: 'center',
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
   logoutIcon: {
     marginLeft: 8,
   },
-  // Bottom Tab Bar
+
   bottomBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
