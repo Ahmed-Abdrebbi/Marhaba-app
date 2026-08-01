@@ -7,16 +7,16 @@ export default function WelcomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Diamond icon */}
+      { }
       <View style={styles.iconContainer}>
         <Ionicons name="diamond-outline" size={40} color="#A855F7" />
       </View>
 
-      {/* Title */}
+      { }
       <Text style={styles.title}>Marhaba-app</Text>
       <Text style={styles.subtitle}>✨ L'élégance de la connexion ✨</Text>
 
-      {/* Buttons */}
+      { }
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.connectButton}
