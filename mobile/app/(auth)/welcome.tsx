@@ -1,23 +1,37 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, { FadeInDown, FadeInUp, ZoomIn } from 'react-native-reanimated';
 
 export default function WelcomeScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      { }
-      <View style={styles.iconContainer}>
+      <Animated.View 
+        style={styles.iconContainer}
+        entering={ZoomIn.duration(800).springify()}
+      >
         <Ionicons name="diamond-outline" size={40} color="#A855F7" />
-      </View>
+      </Animated.View>
 
-      { }
-      <Text style={styles.title}>Marhaba-app</Text>
-      <Text style={styles.subtitle}>✨ L'élégance de la connexion ✨</Text>
+      <Animated.Text 
+        style={styles.title}
+        entering={FadeInDown.duration(600).delay(300)}
+      >
+        Marhaba-app
+      </Animated.Text>
+      <Animated.Text 
+        style={styles.subtitle}
+        entering={FadeInDown.duration(600).delay(400)}
+      >
+        ✨ L'élégance de la connexion ✨
+      </Animated.Text>
 
-      { }
-      <View style={styles.buttonContainer}>
+      <Animated.View 
+        style={styles.buttonContainer}
+        entering={FadeInUp.duration(800).delay(600)}
+      >
         <TouchableOpacity
           style={styles.connectButton}
           onPress={() => router.push('/(auth)/login')}
@@ -34,7 +48,7 @@ export default function WelcomeScreen() {
         >
           <Text style={styles.registerButtonText}>S'INSCRIRE</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     </View>
   );
 }
