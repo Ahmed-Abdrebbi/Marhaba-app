@@ -28,7 +28,7 @@ export default function LoginScreen() {
       const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;
       await login(token, user);
-      // The root layout auth guard will automatically redirect to home
+      
     } catch (error: any) {
       const msg = error?.response?.data?.error || 'Erreur de connexion. Vérifiez vos identifiants.';
       setErrorMessage(msg);

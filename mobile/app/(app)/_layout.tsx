@@ -13,7 +13,6 @@ export default function AppLayout() {
         tabBarInactiveTintColor: '#9CA3AF',
         tabBarShowLabel: true,
         tabBarLabelStyle: { fontSize: 10, marginTop: 4 },
-        // Use a slight fade animation between tabs
         animation: 'fade',
       }}
     >

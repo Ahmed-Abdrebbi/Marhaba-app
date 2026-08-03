@@ -34,7 +34,7 @@ export default function RegisterScreen() {
       const response = await api.post('/auth/register', { fullName, email, password });
       const { token, user } = response.data;
       await login(token, user);
-      // The root layout auth guard will automatically redirect to home
+       
     } catch (error: any) {
       const msg = error?.response?.data?.error || "Erreur lors de l'inscription. Réessayez.";
       setErrorMessage(msg);
