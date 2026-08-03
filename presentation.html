@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marhaba — Présentation Projet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; overflow-y: scroll; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #06080F;
+      color: #E2E8F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --purple: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.25);
+      --purple-dark: #7C3AED;
+      --bg-primary: #0B0F19;
+      --bg-card: #151923;
+      --bg-card-hover: #1A1F2E;
+      --border: #2A2E3D;
+      --text-primary: #FFFFFF;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --green: #22C55E;
+      --red: #EF4444;
+      --blue: #3B82F6;
+      --amber: #F59E0B;
+      --cyan: #06B6D4;
+    }
+
+    /* ========== SLIDE SYSTEM ========== */
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-inner {
+      max-width: 1100px;
+      width: 100%;
+      z-index: 2;
+    }
+
+    /* ========== NAVIGATION ========== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6, 8, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(42, 46, 61, 0.5);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 20px var(--purple-glow);
+    }
+    .nav-title {
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-primary);
+      background: rgba(168, 85, 247, 0.1);
+    }
+
+    /* ========== SLIDE PROGRESS ========== */
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      z-index: 1000;
+      transition: width 0.3s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ========== SIDE DOTS ========== */
+    .side-dots {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .side-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      padding: 0;
+    }
+    .side-dot.active {
+      background: var(--purple);
+      box-shadow: 0 0 12px var(--purple-glow);
+      transform: scale(1.3);
+    }
+
+    /* ========== BACKGROUNDS ========== */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .bg-radial {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .bg-radial.purple { background: var(--purple); top: -200px; right: -200px; }
+    .bg-radial.blue { background: var(--blue); bottom: -200px; left: -200px; }
+    .bg-radial.center { background: var(--purple); top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; opacity: 0.08; }
+
+    /* ========== TYPOGRAPHY ========== */
+    .slide-number {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-number::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--purple);
+      border-radius: 1px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--purple) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .highlight {
+      color: var(--purple);
+    }
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* ========== CARDS ========== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(168, 85, 247, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px var(--purple-glow);
+    }
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== GRIDS ========== */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ========== BADGES ========== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid;
+    }
+    .badge-purple { background: rgba(168,85,247,0.1); border-color: rgba(168,85,247,0.3); color: var(--purple); }
+    .badge-green { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.3); color: var(--green); }
+    .badge-blue { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3); color: var(--blue); }
+    .badge-amber { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: var(--amber); }
+
+    /* ========== PHONE MOCKUP ========== */
+    .phone-mockup {
+      width: 280px;
+      height: 560px;
+      border-radius: 36px;
+      background: var(--bg-primary);
+      border: 3px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      flex-shrink: 0;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #000;
+      border-radius: 0 0 18px 18px;
+      z-index: 10;
+    }
+    .phone-screen {
+      padding: 44px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== ARCHITECTURE DIAGRAM ========== */
+    .arch-box {
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      position: relative;
+    }
+    .arch-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 24px;
+      padding: 0 8px;
+    }
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ========== TABLE ========== */
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    .api-table th {
+      background: rgba(168, 85, 247, 0.08);
+      color: var(--purple);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .api-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(42, 46, 61, 0.5);
+      vertical-align: middle;
+    }
+    .api-table tr:hover td {
+      background: rgba(168, 85, 247, 0.03);
+    }
+    .method-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .method-post { background: rgba(34,197,94,0.15); color: var(--green); }
+    .method-get { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .route-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--cyan);
+    }
+    .lock-icon { font-size: 14px; }
+
+    /* ========== CODE BLOCK ========== */
+    .code-block {
+      background: #0D1117;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+    }
+    .code-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .code-content {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #C9D1D9;
+      overflow-x: auto;
+    }
+    .code-keyword { color: #FF7B72; }
+    .code-string { color: #A5D6FF; }
+    .code-func { color: #D2A8FF; }
+    .code-comment { color: #8B949E; font-style: italic; }
+    .code-const { color: #79C0FF; }
+
+    /* ========== STAT ========== */
+    .stat {
+      text-align: center;
+      padding: 24px;
+    }
+    .stat-value {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ========== TIMELINE ========== */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--purple), var(--cyan));
+      border-radius: 1px;
+    }
+    .timeline-item {
+      padding: 12px 0 24px 20px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--purple);
+      border: 2px solid var(--bg-primary);
+      box-shadow: 0 0 12px var(--purple-glow);
+    }
+    .timeline-day {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--purple);
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+    .timeline-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ========== SECURITY ITEM ========== */
+    .security-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(21, 25, 35, 0.6);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .security-item:hover {
+      border-color: rgba(34, 197, 94, 0.3);
+      background: rgba(34, 197, 94, 0.03);
+    }
+    .security-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .security-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .security-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero-layout {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    .hero-left { flex: 1; }
+
+    /* ========== SECTION TWO-COL ========== */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ========== SCREEN PREVIEW ========== */
+    .screen-preview {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .screen-card {
+      text-align: center;
+    }
+    .screen-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+    .mini-phone {
+      width: 200px;
+      height: 400px;
+      border-radius: 28px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      transition: all 0.4s;
+    }
+    .mini-phone:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 30px var(--purple-glow);
+      border-color: rgba(168,85,247,0.4);
+    }
+    .mini-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      background: #000;
+      border-radius: 0 0 14px 14px;
+      z-index: 10;
+    }
+    .mini-screen {
+      padding: 36px 14px 14px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== CHIP ========== */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      transition: all 0.3s;
+    }
+    .chip:hover {
+      border-color: var(--purple);
+      background: rgba(168,85,247,0.08);
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-bar {
+      text-align: center;
+      padding: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+    .fade-in-delay-5 { transition-delay: 0.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    .float { animation: float 4s ease-in-out infinite; }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px var(--purple-glow); }
+      50% { box-shadow: 0 0 40px var(--purple-glow), 0 0 80px rgba(168,85,247,0.1); }
+    }
+    .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ========== PRINT ========== */
+    @media print {
+      html { scroll-snap-type: none; }
+      .slide { min-height: auto; page-break-after: always; padding: 40px; }
+      .nav, .side-dots, .progress-bar, .bg-grid, .bg-radial { display: none !important; }
+      body { background: white; color: #1a1a1a; }
+      .card { border: 1px solid #ddd; }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .two-col { grid-template-columns: 1fr; }
+      .hero-layout { flex-direction: column; text-align: center; }
+      .screen-preview { flex-direction: column; align-items: center; }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+      .nav-links { display: none; }
+      .side-dots { display: none; }
+      .slide { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION                                                     -->
+<!-- ============================================================ -->
+<nav class="nav">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-logo">M</div>
+    <span class="nav-title">MARHABA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Accueil</a></li>
+    <li><a href="#problem">Problème</a></li>
+    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#security">Sécurité</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#screens">Écrans</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Side Dots -->
+<div class="side-dots" id="sideDots"></div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 1 — HERO                                                -->
+<!-- ============================================================ -->
+<section class="slide" id="hero">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple"></div>
+  <div class="bg-radial blue"></div>
+
+  <div class="slide-inner hero-layout">
+    <div class="hero-left">
+      <div class="fade-in">
+        <div style="display:flex;gap:10px;margin-bottom:24px;">
+          <span class="badge badge-purple">📱 Mobile App</span>
+          <span class="badge badge-green">✅ Full-Stack</span>
+        </div>
+      </div>
+
+      <h1 class="fade-in fade-in-delay-1">
+        <span class="gradient-text">Marhaba</span><br/>
+        L'élégance de<br/>la connexion
+      </h1>
+
+      <p class="subtitle fade-in fade-in-delay-2">
+        Application mobile d'authentification premium avec une expérience utilisateur soignée. Architecture full-stack moderne, sécurité renforcée, design élégant.
+      </p>
+
+      <div style="display:flex;gap:16px;margin-top:32px;" class="fade-in fade-in-delay-3">
+        <a href="#features" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));border-radius:12px;color:white;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 8px 32px var(--purple-glow);transition:all 0.3s;">
+          Découvrir →
+        </a>
+        <a href="#architecture" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--text-primary);font-weight:600;font-size:15px;text-decoration:none;transition:all 0.3s;">
+          Architecture
+        </a>
+      </div>
+    </div>
+
+    <!-- Phone Mockup -->
+    <div class="fade-in fade-in-delay-3 float">
+      <div class="phone-mockup pulse-glow">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div style="width:56px;height:56px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:24px;">💎</div>
+            <div style="font-size:22px;font-weight:800;color:white;margin-bottom:6px;">Marhaba-app</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:40px;">✨ L'élégance de la connexion ✨</div>
+            <div style="width:100%;padding:14px;background:var(--purple);border-radius:10px;text-align:center;font-weight:700;font-size:14px;color:white;margin-bottom:10px;">SE CONNECTER 👋</div>
+            <div style="width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;text-align:center;font-weight:600;font-size:14px;color:white;">S'INSCRIRE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 2 — PROBLEM                                             -->
+<!-- ============================================================ -->
+<section class="slide" id="problem">
+  <div class="bg-grid"></div>
+  <div class="bg-radial center"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">02 — CONTEXTE</div>
+    <h2 class="fade-in fade-in-delay-1">Le problème que<br/><span class="highlight">nous résolvons</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      La plupart des applications mobiles nécessitent un système d'authentification fiable. Marhaba fournit un socle complet, sécurisé et élégant.
+    </p>
+
+    <div class="grid-3">
+      <div class="card fade-in fade-in-delay-2">
+        <div class="card-icon" style="background:rgba(239,68,68,0.1);">🔓</div>
+        <div class="card-title">Sécurité insuffisante</div>
+        <div class="card-desc">Trop d'apps stockent des tokens en clair ou ne hashent pas les mots de passe. Marhaba utilise bcrypt + SecureStore.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-3">
+        <div class="card-icon" style="background:rgba(245,158,11,0.1);">🧩</div>
+        <div class="card-title">Expérience fragmentée</div>
+        <div class="card-desc">Des flux d'inscription/connexion mal conçus frustrent les utilisateurs. Marhaba offre un parcours fluide et animé.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-4">
+        <div class="card-icon" style="background:rgba(59,130,246,0.1);">⚙️</div>
+        <div class="card-title">Architecture fragile</div>
+        <div class="card-desc">Sans architecture claire, le code devient ingérable. Marhaba sépare proprement frontend, backend, services et state.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 3 — FEATURES                                            -->
+<!-- ============================================================ -->
+<section class="slide" id="features">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple" style="top:50%;left:-200px;"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">03 — FONCTIONNALITÉS</div>
+    <h2 class="fade-in fade-in-delay-1">Fonctionnalités<br/><span class="highlight">principales</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      Chaque fonctionnalité est pensée pour offrir une expérience premium à l'utilisateur.
+    </p>
+
+    <div class="grid-2">
+      <div class="card fade-in fade-in-delay-2">
+        <div class="card-icon" style="background:rgba(168,85,247,0.1);">👋</div>
+        <div class="card-title">Écran de bienvenue</div>
+        <div class="card-desc">Page d'accueil animée avec transitions fluides (FadeIn, ZoomIn). Logo, branding et CTA vers connexion/inscription.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-3">
+        <div class="card-icon" style="background:rgba(34,197,94,0.1);">🔐</div>
+        <div class="card-title">Authentification complète</div>
+        <div class="card-desc">Inscription avec validation, connexion sécurisée, session persistante via JWT stocké dans Expo SecureStore.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-3">
+        <div class="card-icon" style="background:rgba(59,130,246,0.1);">🏠</div>
+        <div class="card-title">Accueil personnalisé</div>
+        <div class="card-desc">Page d'accueil qui salue l'utilisateur par son prénom : « Marhba, Ahmed 👋 ». Indicateur de statut en ligne.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-4">
+        <div class="card-icon" style="background:rgba(6,182,212,0.1);">🔍</div>
+        <div class="card-title">Explorer les utilisateurs</div>
+        <div class="card-desc">Liste des membres avec pull-to-refresh, animation séquentielle des cards, gestion des états (loading, error, vide).</div>
+      </div>
+      <div class="card fade-in fade-in-delay-4">
+        <div class="card-icon" style="background:rgba(245,158,11,0.1);">⭐</div>
+        <div class="card-title">Favoris</div>
+        <div class="card-desc">Section dédiée aux favoris avec écran placeholder élégant. Prête à être étendue avec la logique de sauvegarde.</div>
+      </div>
+      <div class="card fade-in fade-in-delay-5">
+        <div class="card-icon" style="background:rgba(239,68,68,0.1);">👤</div>
+        <div class="card-title">Profil & Déconnexion</div>
+        <div class="card-desc">Page profil affichant nom complet et email. Bouton de déconnexion sécurisé qui efface le token et redirige.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 4 — ARCHITECTURE                                        -->
+<!-- ============================================================ -->
+<section class="slide" id="architecture">
+  <div class="bg-grid"></div>
+  <div class="bg-radial center"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">04 — ARCHITECTURE</div>
+    <h2 class="fade-in fade-in-delay-1">Architecture<br/><span class="highlight">full-stack</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      Séparation claire entre frontend mobile et backend API, avec des couches bien définies.
+    </p>
+
+    <!-- Architecture Flow -->
+    <div class="fade-in fade-in-delay-3" style="margin-bottom:40px;">
+      <div class="arch-flow">
+        <div class="arch-box" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);color:var(--purple);">
+          📱 Mobile<br/><small style="color:var(--text-secondary);">React Native / Expo</small>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue);">
+          🌐 API REST<br/><small style="color:var(--text-secondary);">Express.js</small>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:var(--green);">
+          🛡️ Middlewares<br/><small style="color:var(--text-secondary);">Auth / Validation</small>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box" style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--amber);">
+          💾 Base de données<br/><small style="color:var(--text-secondary);">SQLite / Sequelize</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two columns: Frontend + Backend -->
+    <div class="two-col fade-in fade-in-delay-4">
+      <!-- Frontend -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:20px 24px;background:rgba(168,85,247,0.05);border-bottom:1px solid var(--border);">
+          <h3 style="margin:0;display:flex;align-items:center;gap:10px;">📱 Frontend Mobile</h3>
+        </div>
+        <div style="padding:24px;">
+          <div class="code-block" style="margin-bottom:16px;">
+            <div class="code-header">
+              <div class="code-dot" style="background:#FF5F56;"></div>
+              <div class="code-dot" style="background:#FFBD2E;"></div>
+              <div class="code-dot" style="background:#27C93F;"></div>
+              <span style="color:var(--text-muted);font-size:12px;margin-left:auto;">Structure</span>
+            </div>
+            <pre class="code-content">mobile/
+├── app/
+│   ├── _layout.tsx       <span class="code-comment">// Auth guard</span>
+│   ├── (auth)/
+│   │   ├── welcome.tsx   <span class="code-comment">// Landing</span>
+│   │   ├── login.tsx     <span class="code-comment">// Connexion</span>
+│   │   └── register.tsx  <span class="code-comment">// Inscription</span>
+│   └── (app)/
+│       ├── home.tsx      <span class="code-comment">// Accueil</span>
+│       ├── search.tsx    <span class="code-comment">// Explorer</span>
+│       ├── favorites.tsx <span class="code-comment">// Favoris</span>
+│       └── profile.tsx   <span class="code-comment">// Profil</span>
+├── services/api.js       <span class="code-comment">// Axios + interceptors</span>
+└── store/useAuthStore.js <span class="code-comment">// Zustand state</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backend -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:20px 24px;background:rgba(59,130,246,0.05);border-bottom:1px solid var(--border);">
+          <h3 style="margin:0;display:flex;align-items:center;gap:10px;">⚙️ Backend API</h3>
+        </div>
+        <div style="padding:24px;">
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dot" style="background:#FF5F56;"></div>
+              <div class="code-dot" style="background:#FFBD2E;"></div>
+              <div class="code-dot" style="background:#27C93F;"></div>
+              <span style="color:var(--text-muted);font-size:12px;margin-left:auto;">Structure</span>
+            </div>
+            <pre class="code-content">backend/
+├── server.js             <span class="code-comment">// Entry point</span>
+├── config/
+│   └── db.js             <span class="code-comment">// Sequelize config</span>
+├── models/
+│   └── User.js           <span class="code-comment">// Modèle + hooks</span>
+├── controllers/
+│   ├── authController.js <span class="code-comment">// Register/Login/Me</span>
+│   └── userController.js <span class="code-comment">// Get all users</span>
+├── middlewares/
+│   ├── authenticate.js   <span class="code-comment">// JWT verify</span>
+│   ├── validateAuth.js   <span class="code-comment">// Input validation</span>
+│   ├── logger.js         <span class="code-comment">// Request logging</span>
+│   └── errorHandler.js   <span class="code-comment">// Global error</span>
+└── routes/
+    ├── authRoutes.js     <span class="code-comment">// /api/auth/*</span>
+    └── userRoutes.js     <span class="code-comment">// /api/users/*</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 5 — SECURITY                                            -->
+<!-- ============================================================ -->
+<section class="slide" id="security">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple" style="bottom:-200px;right:-200px;"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">05 — SÉCURITÉ</div>
+    <h2 class="fade-in fade-in-delay-1">Sécurité<br/><span class="highlight">renforcée</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      La sécurité n'est pas optionnelle. Chaque couche de l'application est protégée.
+    </p>
+
+    <div class="grid-2">
+      <div class="security-item fade-in fade-in-delay-2">
+        <div class="security-icon">🔑</div>
+        <div>
+          <div class="security-title">Hachage bcrypt (salt factor 10)</div>
+          <div class="security-desc">Les mots de passe sont hashés avant stockage. Jamais en clair dans la base ni dans les réponses JSON.</div>
+        </div>
+      </div>
+      <div class="security-item fade-in fade-in-delay-2">
+        <div class="security-icon">🎟️</div>
+        <div>
+          <div class="security-title">JWT signé avec expiration</div>
+          <div class="security-desc">Tokens JWT signés avec un secret serveur, expirant après 7 jours. Secret stocké en variable d'environnement.</div>
+        </div>
+      </div>
+      <div class="security-item fade-in fade-in-delay-3">
+        <div class="security-icon">📱</div>
+        <div>
+          <div class="security-title">Expo SecureStore</div>
+          <div class="security-desc">Le token est stocké dans le keychain iOS / EncryptedSharedPreferences Android. Jamais AsyncStorage.</div>
+        </div>
+      </div>
+      <div class="security-item fade-in fade-in-delay-3">
+        <div class="security-icon">🛡️</div>
+        <div>
+          <div class="security-title">Double protection des routes</div>
+          <div class="security-desc">Middleware authenticate côté backend + guard de navigation côté frontend. Deux barrières pour un accès non autorisé.</div>
+        </div>
+      </div>
+      <div class="security-item fade-in fade-in-delay-4">
+        <div class="security-icon">🕵️</div>
+        <div>
+          <div class="security-title">Messages d'erreur opaques</div>
+          <div class="security-desc">« Email ou mot de passe incorrect » — même message pour email inexistant et mauvais mot de passe. Anti-énumération.</div>
+        </div>
+      </div>
+      <div class="security-item fade-in fade-in-delay-4">
+        <div class="security-icon">✅</div>
+        <div>
+          <div class="security-title">Validation côté serveur</div>
+          <div class="security-desc">Middlewares validateRegister et validateLogin vérifient les champs et la longueur du mot de passe avant le controller.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 6 — API ENDPOINTS                                       -->
+<!-- ============================================================ -->
+<section class="slide" id="api">
+  <div class="bg-grid"></div>
+  <div class="bg-radial center"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">06 — API REST</div>
+    <h2 class="fade-in fade-in-delay-1">Endpoints<br/><span class="highlight">de l'API</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:40px;">
+      API RESTful claire et documentée, testable avec Postman.
+    </p>
+
+    <div class="card fade-in fade-in-delay-3" style="padding:0;overflow:hidden;">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Route</th>
+            <th>Accès</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method-badge method-post">POST</span></td>
+            <td><span class="route-path">/api/auth/register</span></td>
+            <td><span class="badge badge-green">Publique</span></td>
+            <td>Inscription — retourne <code style="color:var(--cyan);">{ token, user }</code></td>
+          </tr>
+          <tr>
+            <td><span class="method-badge method-post">POST</span></td>
+            <td><span class="route-path">/api/auth/login</span></td>
+            <td><span class="badge badge-green">Publique</span></td>
+            <td>Connexion — retourne <code style="color:var(--cyan);">{ token, user }</code></td>
+          </tr>
+          <tr>
+            <td><span class="method-badge method-get">GET</span></td>
+            <td><span class="route-path">/api/auth/me</span></td>
+            <td><span class="badge badge-amber">🔒 Protégée</span></td>
+            <td>Retourne l'utilisateur connecté (sans mot de passe)</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge method-get">GET</span></td>
+            <td><span class="route-path">/api/users</span></td>
+            <td><span class="badge badge-amber">🔒 Protégée</span></td>
+            <td>Liste tous les utilisateurs inscrits</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Auth Flow Code -->
+    <div class="fade-in fade-in-delay-4" style="margin-top:32px;">
+      <h3 style="margin-bottom:16px;">🔄 Flux d'authentification</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dot" style="background:#FF5F56;"></div>
+          <div class="code-dot" style="background:#FFBD2E;"></div>
+          <div class="code-dot" style="background:#27C93F;"></div>
+          <span style="color:var(--text-muted);font-size:12px;margin-left:auto;">authController.js — Extrait</span>
+        </div>
+        <pre class="code-content"><span class="code-keyword">const</span> <span class="code-func">generateToken</span> = (<span class="code-const">userId</span>) => {
+  <span class="code-keyword">return</span> jwt.<span class="code-func">sign</span>({ <span class="code-const">id</span>: userId }, process.env.<span class="code-const">JWT_SECRET</span>, {
+    <span class="code-const">expiresIn</span>: <span class="code-string">'7d'</span>
+  });
+};
+
+exports.<span class="code-func">login</span> = <span class="code-keyword">async</span> (req, res) => {
+  <span class="code-keyword">const</span> user = <span class="code-keyword">await</span> User.<span class="code-func">findOne</span>({ where: { email } });
+  <span class="code-keyword">const</span> isMatch = <span class="code-keyword">await</span> bcrypt.<span class="code-func">compare</span>(password, user.password);
+  <span class="code-keyword">const</span> token = <span class="code-func">generateToken</span>(user.id);
+  res.<span class="code-func">json</span>({ user, token }); <span class="code-comment">// password auto-exclu via toJSON()</span>
+};</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 7 — SCREENS                                             -->
+<!-- ============================================================ -->
+<section class="slide" id="screens">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple" style="top:50%;right:-200px;"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">07 — INTERFACES</div>
+    <h2 class="fade-in fade-in-delay-1" style="text-align:center;">Écrans de<br/><span class="highlight">l'application</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="text-align:center;margin:0 auto 48px;">
+      Design dark premium avec animations fluides et navigation par onglets.
+    </p>
+
+    <div class="screen-preview fade-in fade-in-delay-3">
+      <!-- Welcome Screen -->
+      <div class="screen-card">
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen" style="align-items:center;justify-content:center;">
+            <div style="width:42px;height:42px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;">💎</div>
+            <div style="font-size:16px;font-weight:800;color:white;margin-bottom:4px;">Marhaba-app</div>
+            <div style="font-size:9px;color:var(--text-secondary);margin-bottom:28px;">✨ L'élégance de la connexion ✨</div>
+            <div style="width:100%;padding:10px;background:var(--purple);border-radius:8px;text-align:center;font-weight:700;font-size:11px;color:white;margin-bottom:8px;">SE CONNECTER 👋</div>
+            <div style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;text-align:center;font-weight:600;font-size:11px;color:white;">S'INSCRIRE</div>
+          </div>
+        </div>
+        <div class="screen-label">BIENVENUE</div>
+      </div>
+
+      <!-- Login Screen -->
+      <div class="screen-card">
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen" style="justify-content:center;">
+            <div style="text-align:center;margin-bottom:24px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:8px;">💎</div>
+              <div style="font-size:16px;font-weight:800;color:white;letter-spacing:1px;">L'ÉLITE</div>
+            </div>
+            <div style="width:100%;height:36px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:var(--text-muted);">✉️ Email</div>
+            <div style="width:100%;height:36px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;display:flex;align-items:center;padding:0 10px;font-size:10px;color:var(--text-muted);">🔒 Mot de passe</div>
+            <div style="text-align:right;margin-bottom:16px;font-size:9px;color:var(--purple);font-weight:600;">Mot de passe oublié ?</div>
+            <div style="width:100%;padding:10px;background:var(--purple);border-radius:8px;text-align:center;font-weight:700;font-size:11px;color:white;">Se connecter →</div>
+            <div style="text-align:center;margin-top:20px;font-size:9px;color:var(--text-secondary);">Pas de compte ? <span style="color:var(--purple);font-weight:700;">Créer un compte</span></div>
+          </div>
+        </div>
+        <div class="screen-label">CONNEXION</div>
+      </div>
+
+      <!-- Home Screen -->
+      <div class="screen-card">
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;">
+              <div style="font-size:14px;color:var(--text-secondary);">☰</div>
+              <div style="font-size:12px;font-weight:800;color:white;letter-spacing:1px;">L'ÉLITE</div>
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--green);"></div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <div style="font-size:22px;font-weight:600;color:white;">Marhba,</div>
+              <div style="font-size:22px;font-weight:800;color:var(--purple);margin-bottom:10px;">Ahmed 👋</div>
+              <div style="font-size:10px;color:var(--text-secondary);">Votre espace exclusif est prêt.</div>
+            </div>
+            <!-- Tab Bar -->
+            <div style="display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--border);font-size:16px;">
+              <span style="color:var(--purple);">🏠</span>
+              <span style="color:var(--text-muted);">🔍</span>
+              <span style="color:var(--text-muted);">⭐</span>
+              <span style="color:var(--text-muted);">👤</span>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">ACCUEIL</div>
+      </div>
+
+      <!-- Search Screen -->
+      <div class="screen-card">
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen">
+            <div style="text-align:center;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+              <div style="font-size:12px;font-weight:800;color:white;letter-spacing:1px;">EXPLORER</div>
+            </div>
+            <!-- User Cards -->
+            <div style="flex:1;overflow:hidden;">
+              <div style="display:flex;align-items:center;background:var(--bg-card);padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--border);">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--bg-primary);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;margin-right:10px;">👤</div>
+                <div><div style="font-size:11px;font-weight:700;color:white;">Ahmed Abdrebbi</div><div style="font-size:9px;color:var(--text-muted);">ahmed@email.com</div></div>
+              </div>
+              <div style="display:flex;align-items:center;background:var(--bg-card);padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--border);">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--bg-primary);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;margin-right:10px;">👤</div>
+                <div><div style="font-size:11px;font-weight:700;color:white;">Sara Martin</div><div style="font-size:9px;color:var(--text-muted);">sara@email.com</div></div>
+              </div>
+              <div style="display:flex;align-items:center;background:var(--bg-card);padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--border);">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--bg-primary);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;margin-right:10px;">👤</div>
+                <div><div style="font-size:11px;font-weight:700;color:white;">Youssef Benali</div><div style="font-size:9px;color:var(--text-muted);">youssef@email.com</div></div>
+              </div>
+            </div>
+            <!-- Tab Bar -->
+            <div style="display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--border);font-size:16px;">
+              <span style="color:var(--text-muted);">🏠</span>
+              <span style="color:var(--purple);">🔍</span>
+              <span style="color:var(--text-muted);">⭐</span>
+              <span style="color:var(--text-muted);">👤</span>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">EXPLORER</div>
+      </div>
+
+      <!-- Profile Screen -->
+      <div class="screen-card">
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen">
+            <div style="text-align:center;padding-bottom:10px;margin-bottom:24px;">
+              <div style="font-size:12px;font-weight:800;color:white;letter-spacing:1px;">PROFIL</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:16px;">
+              <div style="width:52px;height:52px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px;">👤</div>
+              <div style="font-size:14px;font-weight:700;color:white;margin-bottom:2px;">Ahmed Abdrebbi</div>
+              <div style="font-size:10px;color:var(--text-muted);margin-bottom:28px;">ahmed@email.com</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:10px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;">
+                <span style="font-size:12px;color:white;font-weight:600;">Se déconnecter</span>
+                <span style="font-size:12px;color:var(--red);">🚪</span>
+              </div>
+            </div>
+            <!-- Tab Bar -->
+            <div style="display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid var(--border);font-size:16px;">
+              <span style="color:var(--text-muted);">🏠</span>
+              <span style="color:var(--text-muted);">🔍</span>
+              <span style="color:var(--text-muted);">⭐</span>
+              <span style="color:var(--purple);">👤</span>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">PROFIL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 8 — TECH STACK                                          -->
+<!-- ============================================================ -->
+<section class="slide" id="stack">
+  <div class="bg-grid"></div>
+  <div class="bg-radial center"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">08 — STACK TECHNIQUE</div>
+    <h2 class="fade-in fade-in-delay-1">Technologies<br/><span class="highlight">utilisées</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      Un choix de technologies modernes, performantes et adaptées au projet.
+    </p>
+
+    <div class="two-col">
+      <!-- Frontend Stack -->
+      <div class="fade-in fade-in-delay-3">
+        <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <span style="width:32px;height:32px;border-radius:8px;background:rgba(168,85,247,0.1);display:flex;align-items:center;justify-content:center;font-size:16px;">📱</span>
+          Frontend Mobile
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">⚛️</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">React Native 0.81</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Framework mobile cross-platform</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🚀</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Expo SDK 54</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Build et développement simplifié</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🧭</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Expo Router 6</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Navigation fichier-basée avec groupes</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🐻</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Zustand 5</div>
+              <div style="font-size:12px;color:var(--text-secondary);">State management léger et performant</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🎬</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Reanimated 4</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Animations natives 60 FPS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backend Stack -->
+      <div class="fade-in fade-in-delay-4">
+        <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <span style="width:32px;height:32px;border-radius:8px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;font-size:16px;">⚙️</span>
+          Backend API
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🟢</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Node.js 18+</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Runtime JavaScript côté serveur</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🚂</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Express 5</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Framework web minimaliste et rapide</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">💾</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">SQLite + Sequelize</div>
+              <div style="font-size:12px;color:var(--text-secondary);">ORM puissant, prêt pour PostgreSQL</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🔐</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">bcrypt + JWT</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Hachage et authentification par token</div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">🧪</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Postman</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Test et documentation de l'API</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Numbers -->
+    <div class="grid-4 fade-in fade-in-delay-5" style="margin-top:48px;">
+      <div class="stat">
+        <div class="stat-value" style="color:var(--purple);">4</div>
+        <div class="stat-label">Endpoints API</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color:var(--green);">7</div>
+        <div class="stat-label">Écrans mobile</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color:var(--blue);">4</div>
+        <div class="stat-label">Middlewares</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color:var(--amber);">6</div>
+        <div class="stat-label">Mesures de sécurité</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 9 — STATE MANAGEMENT                                    -->
+<!-- ============================================================ -->
+<section class="slide" id="state">
+  <div class="bg-grid"></div>
+  <div class="bg-radial blue" style="top:-200px;left:50%;"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">09 — GESTION D'ÉTAT</div>
+    <h2 class="fade-in fade-in-delay-1">Flux de données<br/><span class="highlight">& State Management</span></h2>
+
+    <div class="two-col" style="margin-top:40px;">
+      <div class="fade-in fade-in-delay-2">
+        <h3 style="margin-bottom:16px;">🐻 Zustand Store</h3>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:20px;">
+          État global minimaliste avec Zustand. Gère l'utilisateur, le token, l'état d'authentification et le chargement.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot" style="background:#FF5F56;"></div>
+            <div class="code-dot" style="background:#FFBD2E;"></div>
+            <div class="code-dot" style="background:#27C93F;"></div>
+            <span style="color:var(--text-muted);font-size:12px;margin-left:auto;">useAuthStore.js</span>
+          </div>
+          <pre class="code-content"><span class="code-keyword">const</span> useAuthStore = <span class="code-func">create</span>((set) => ({
+  <span class="code-const">user</span>: <span class="code-keyword">null</span>,
+  <span class="code-const">token</span>: <span class="code-keyword">null</span>,
+  <span class="code-const">isAuthenticated</span>: <span class="code-keyword">false</span>,
+  <span class="code-const">isLoading</span>: <span class="code-keyword">true</span>,
+
+  <span class="code-func">restoreSession</span>: <span class="code-keyword">async</span> () => {
+    <span class="code-keyword">const</span> token = <span class="code-keyword">await</span> SecureStore.<span class="code-func">getItemAsync</span>(<span class="code-string">'token'</span>);
+    <span class="code-keyword">if</span> (!token) <span class="code-keyword">return</span> <span class="code-func">set</span>({ isLoading: <span class="code-keyword">false</span> });
+    <span class="code-keyword">const</span> { data } = <span class="code-keyword">await</span> api.<span class="code-func">get</span>(<span class="code-string">'/auth/me'</span>);
+    <span class="code-func">set</span>({ user: data.user, isAuthenticated: <span class="code-keyword">true</span> });
+  },
+
+  <span class="code-func">login</span>: <span class="code-keyword">async</span> (token, user) => { <span class="code-comment">/* ... */</span> },
+  <span class="code-func">logout</span>: <span class="code-keyword">async</span> () => { <span class="code-comment">/* ... */</span> },
+}));</pre>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-3">
+        <h3 style="margin-bottom:16px;">🔄 Flux de navigation</h3>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:20px;">
+          Le root layout agit comme un guard : il redirige automatiquement vers l'écran approprié selon l'état d'authentification.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:20px;">1️⃣</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Lancement de l'app</div>
+                <div style="font-size:12px;color:var(--text-secondary);">restoreSession() vérifie le token dans SecureStore</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:20px;">2️⃣</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Token trouvé ?</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Appel GET /api/auth/me pour valider le token</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:20px;">3️⃣</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Redirection automatique</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Authentifié → (app)/home | Non → (auth)/welcome</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:20px;">4️⃣</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--text-primary);">Intercepteur Axios</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Injecte automatiquement le Bearer token dans chaque requête</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 10 — ROADMAP                                            -->
+<!-- ============================================================ -->
+<section class="slide" id="roadmap">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple" style="top:50%;left:-200px;"></div>
+
+  <div class="slide-inner">
+    <div class="slide-number fade-in">10 — ROADMAP</div>
+    <h2 class="fade-in fade-in-delay-1">Évolutions<br/><span class="highlight">futures</span></h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin-bottom:48px;">
+      La V1 est solide. Voici la feuille de route pour les prochaines itérations.
+    </p>
+
+    <div class="two-col">
+      <div class="fade-in fade-in-delay-3">
+        <h3 style="margin-bottom:20px;">📅 Prochaines étapes</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-day">PHASE 2</div>
+            <div class="timeline-title">Système de favoris fonctionnel</div>
+            <div class="timeline-desc">Sauvegarde des utilisateurs favoris avec persistance en base de données et synchronisation en temps réel.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-day">PHASE 3</div>
+            <div class="timeline-title">Profil éditable + Avatar</div>
+            <div class="timeline-desc">Modification du nom, upload de photo de profil via le storage cloud, gestion de la bio utilisateur.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-day">PHASE 4</div>
+            <div class="timeline-title">Migration PostgreSQL</div>
+            <div class="timeline-desc">Migration de SQLite vers PostgreSQL pour un environnement de production robuste avec Sequelize.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-day">PHASE 5</div>
+            <div class="timeline-title">Notifications push</div>
+            <div class="timeline-desc">Notifications en temps réel via Expo Notifications et Firebase Cloud Messaging.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-day">PHASE 6</div>
+            <div class="timeline-title">Déploiement production</div>
+            <div class="timeline-desc">Backend sur un serveur cloud (Railway/Render), mobile via EAS Build sur App Store et Google Play.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in fade-in-delay-4">
+        <h3 style="margin-bottom:20px;">🎯 Points forts du projet</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card">
+            <div class="card-title" style="display:flex;align-items:center;gap:8px;">✅ Code propre et structuré</div>
+            <div class="card-desc">Architecture MVC claire, séparation des responsabilités, nommage cohérent et code lisible.</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="display:flex;align-items:center;gap:8px;">✅ Sécurité au centre</div>
+            <div class="card-desc">6 mesures de sécurité implémentées dès la V1 : hachage, JWT, SecureStore, double protection, anti-énumération.</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="display:flex;align-items:center;gap:8px;">✅ UX premium</div>
+            <div class="card-desc">Design dark mode élégant, animations natives 60 FPS, transitions fluides, feedback visuel sur chaque action.</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="display:flex;align-items:center;gap:8px;">✅ Extensible</div>
+            <div class="card-desc">Architecture modulaire prête pour l'ajout de nouvelles fonctionnalités sans refactoring majeur.</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="display:flex;align-items:center;gap:8px;">✅ Cross-platform</div>
+            <div class="card-desc">Un seul code pour iOS, Android et Web grâce à React Native et Expo. Testable via QR code.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 11 — CONTACT / THANK YOU                                -->
+<!-- ============================================================ -->
+<section class="slide" id="contact">
+  <div class="bg-grid"></div>
+  <div class="bg-radial purple"></div>
+  <div class="bg-radial blue"></div>
+
+  <div class="slide-inner" style="text-align:center;">
+    <div class="fade-in" style="margin-bottom:40px;">
+      <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));display:inline-flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:white;box-shadow:0 20px 60px var(--purple-glow);margin-bottom:24px;">M</div>
+    </div>
+
+    <h2 class="fade-in fade-in-delay-1" style="font-size:clamp(36px,5vw,56px);">
+      <span class="gradient-text">Merci</span>
+    </h2>
+    <p class="subtitle fade-in fade-in-delay-2" style="margin:0 auto 48px;text-align:center;max-width:500px;">
+      Marhaba est prêt pour la prochaine étape. Des questions ? Je suis à votre disposition.
+    </p>
+
+    <div class="fade-in fade-in-delay-3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;">
+      <div class="chip">👤 Ahmed Abdrebbi</div>
+      <a href="https://github.com/Ahmed-Abdrebbi/Marhaba-app" target="_blank" style="text-decoration:none;">
+        <div class="chip" style="cursor:pointer;">
+          🔗 GitHub Repository
+        </div>
+      </a>
+      <div class="chip">📱 Projet individuel</div>
+    </div>
+
+    <div class="fade-in fade-in-delay-4" style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <span class="badge badge-purple">React Native</span>
+      <span class="badge badge-green">Node.js</span>
+      <span class="badge badge-blue">Express</span>
+      <span class="badge badge-amber">SQLite</span>
+      <span class="badge badge-purple">Expo</span>
+      <span class="badge badge-green">JWT</span>
+      <span class="badge badge-blue">Zustand</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="footer-bar">
+  Marhaba © 2026 — Ahmed Abdrebbi. Présentation générée pour soutenance professionnelle.
+</footer>
+
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT                                                     -->
+<!-- ============================================================ -->
+<script>
+  // ---- Intersection Observer for fade-in animations ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ---- Side dots ----
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('sideDots');
+
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'side-dot';
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => {
+      slide.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll('.side-dot');
+
+  // ---- Progress bar + active dot ----
+  const progressBar = document.getElementById('progressBar');
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    // Active dot
+    let activeIndex = 0;
+    slides.forEach((slide, i) => {
+      const rect = slide.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
+        activeIndex = i;
+      }
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeIndex);
+    });
+
+    // Active nav link
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      const section = document.querySelector(href);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        link.classList.toggle('active',
+          rect.top <= window.innerHeight / 2 && rect.bottom > window.innerHeight / 2
+        );
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ---- Keyboard navigation ----
+  document.addEventListener('keydown', (e) => {
+    const currentSlide = [...slides].findIndex(slide => {
+      const rect = slide.getBoundingClientRect();
+      return rect.top >= -100 && rect.top <= window.innerHeight / 2;
+    });
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      const next = Math.min(currentSlide + 1, slides.length - 1);
+      slides[next].scrollIntoView({ behavior: 'smooth' });
+    }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prev = Math.max(currentSlide - 1, 0);
+      slides[prev].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
+
+</body>
+</html>
